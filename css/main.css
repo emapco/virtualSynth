@@ -87,51 +87,83 @@ textarea {
    Author's custom styles
    ========================================================================== */
 body {
-  background: aqua;
+  background: url("../img/wood.png") center;
   height: 100vh;
   display: flex;
 }
 
-.white-keys kbd {
-  display: inline-block;
-  background: white;
-  width: 3rem;
-  height: 5rem;
-  text-align: center;
-  border: solid gray;
-  padding-top: 50%;
-  margin: 0;
-}
-
-.black-keys kbd {
-  display: inline-block;
-  background: black;
-  width: 3rem;
-  height: 5rem;
-  text-align: center;
-  border: solid gray;
-  padding-top: 50%;
-  margin: 0;
-  color: white;
-  z-index: 2;
-}
-
-#W, #E {
-  position: relative;
-  bottom: 33em;
-  left: 2em;
-}
-
-#T, #Y, #U {
-  position: relative;
-  bottom: 33em;
-  left: 6.5em;
-}
-
-.container {
+.synth-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  border: solid;
   margin: auto;
   width: auto;
 }
+
+.left-side, .right-side {
+  margin: auto;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.key-container {
+  padding-top: 10rem;
+  margin: auto;
+  width: auto;
+}
+
+kbd {
+  text-align: center;
+
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0;
+}
+
+.white-keys kbd {
+  border: solid gray;
+  padding-top: 250px;
+  background: white;
+}
+
+.black-keys kbd {
+  padding-top: 160px;
+  color: white;
+  top: 1em;
+  z-index: 2;
+}
+
+.white-keys {
+  flex-wrap: nowrap;
+  display: flex;
+}
+
+.black-keys {
+  left: 20px;
+  bottom: 277px;
+  flex-wrap: nowrap;
+  position: relative;
+  display: flex;
+}
+
+#W, #E {
+  background: black;
+  border: solid gray;
+  left: 20px;
+}
+
+#T, #Y, #U {
+  background: black;
+  border: solid gray;
+}
+
+#blank-key {
+  font-size: 15px; /*So TYU keys are aligned properly */
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
