@@ -87,7 +87,7 @@ textarea {
    Author's custom styles
    ========================================================================== */
 body {
-  background: url("../img/wood.png") center;
+  background: url("https://raw.githubusercontent.com/emapco/virtualSynth/master/img/wood.png") center;
   height: 100vh;
   display: flex;
 }
