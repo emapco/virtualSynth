@@ -18,30 +18,16 @@ const noteFrequencies = {  // frequencies starting with middle C
 
 // listener for when a key is pressed
 document.addEventListener("keypress", function(event) {
-  if (keys.indexOf(event.code) === -1) {
-    console.log("ERROR: invalid key pressed!");
-  } else {
-    let audio = document.createElement("AUDIO");
-    animateKeyPress(event);
-    playNote(noteFrequencies[event.key.toLocaleUpperCase()]);
-  }
+  keyPressListener(event);
+});
+document.getElementById("octave-up").addEventListener("click", function () {
+  changeOctave(1);
+});
+document.getElementById("octave-down").addEventListener("click", function () {
+  changeOctave(-1)
 });
 
-function animateKeyPress(event) {
-  let key = document.getElementById(event.key.toLocaleUpperCase());
-  key.style.backgroundColor = "gray";
-
-  // listener for when the key is released
-  document.addEventListener("keyup", function() {
-    if (key.parentElement.classList.contains("white-keys")) {
-      key.style.backgroundColor = "white"; // white key was released so set it back to white
-    }
-    else {
-      key.style.backgroundColor = "black";
-    }
-  });
-}
-
+// Synthesize audio code block
 let context = new AudioContext();
 let o = null;
 let g = null;
@@ -56,4 +42,49 @@ function playNote(frequency) {
   g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1);
 }
 
+function calculateFrequency(noteFrequency) {
+  if (octave === 0) {
+    return noteFrequency;
+  }
+  return Math.round(Math.pow(2, octave)*noteFrequency*1000)/1000
+}
 
+// set octave range code block
+let octave = 0;
+function changeOctave(value) {
+  if (value === 1) {
+    octave++;
+  } else {
+    octave--;
+  }
+  // update value in html
+  if (octave === 0) {
+    document.getElementById("octave-label").innerText = '-';
+  } else {
+    document.getElementById("octave-label").innerText = octave;
+  }
+}
+
+function keyPressListener(event) {
+  if (keys.indexOf(event.code) === -1) {
+    console.log("ERROR: invalid key pressed!");
+  } else {
+    animateKeyPress(event);
+    playNote(calculateFrequency(noteFrequencies[event.key.toUpperCase()]));
+  }
+}
+
+function animateKeyPress(event) {
+  let key = document.getElementById(event.key.toUpperCase());
+  key.style.backgroundColor = "gray";
+
+  // listener for when the key is released
+  document.addEventListener("keyup", function () {
+    if (key.parentElement.classList.contains("white-keys")) {
+      key.style.backgroundColor = "white"; // white key was released so set it back to white
+    }
+    else {
+      key.style.backgroundColor = "black";
+    }
+  });
+}
