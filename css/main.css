@@ -101,11 +101,9 @@ body {
 }
 
 .left-side, .right-side {
+  display: flex;
+  flex-direction: column;
   margin: auto;
-  position: relative;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
 }
 
 .input-container {
@@ -120,9 +118,7 @@ body {
 }
 
 .key-container {
-  padding-top: 10rem;
-  margin: auto;
-  width: auto;
+  margin-top: 10rem;
 }
 
 kbd {
@@ -130,6 +126,11 @@ kbd {
   padding-left: 15px;
   padding-right: 15px;
   margin: 0;
+}
+
+span {
+   display: inline-block;
+   width: 5em;
 }
 
 #white-keys kbd {

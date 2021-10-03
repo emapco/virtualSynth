@@ -1,6 +1,5 @@
 <!doctype html>
 <html class="no-js" lang="">
-
 <head>
   <meta charset="utf-8">
   <title></title>
@@ -22,11 +21,17 @@
 
   <meta name="theme-color" content="#fafafa">
 </head>
-
 <body>
   <!-- Add your site or application content here -->
   <div class="synth-container">
     <div class="left-side">
+      <div class="input-container">
+        <p>Select waveform</p>
+        <span><label><input type="radio" name="soundWave" checked value="sine" onclick="updateWave(this.value)">Sine</label></span>
+        <span><label><input type="radio" name="soundWave" value="square" onclick="updateWave(this.value)">Square</label></span>
+        <span><label><input type="radio" name="soundWave" value="sawtooth" onclick="updateWave(this.value)">Sawtooth</label></span>
+        <span><label><input type="radio" name="soundWave" value="triangle" onclick="updateWave(this.value)">Triangle</label></span>
+      </div>
     </div>
     <div class="key-container">
       <div id="white-keys">
@@ -58,7 +63,6 @@
     </div>
   </div>
   <script src="js/main.js"></script>
-
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID.
   <script>
     window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
@@ -66,5 +70,4 @@
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async></script>-->
 </body>
-
 </html>

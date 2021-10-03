@@ -16,6 +16,9 @@ const noteFrequencies = {  // frequencies starting with middle C
   'K': 523.252
 }
 
+/************************
+ * EventListener SECTION
+ ************************/
 // listener for when a key is pressed
 document.addEventListener("keypress", function(event) {
   keyPressListener(event.key.toUpperCase(), "keypress");
@@ -23,6 +26,14 @@ document.addEventListener("keypress", function(event) {
 // listener for when the key is released
 document.addEventListener("keyup", function (event) {
   keyReleaseListener(event.key.toUpperCase());
+});
+document.addEventListener("keydown", function(event) {
+  let code = event.code
+  if (code === "ArrowUp") {
+    changeOctave(1);
+  } else if (code === "ArrowDown") {
+    changeOctave(-1)
+  }
 });
 document.getElementById("octave-up").addEventListener("click", function () {
   changeOctave(1);
@@ -37,20 +48,40 @@ document.querySelectorAll("kbd").forEach(item => {
   });
 });
 
-
+/************************
+* AUDIO SECTION
+ ************************/
 // Synthesize audio code block
 let context = new AudioContext();
 let o = null;
 let g = null;
+let wave_type = 'sine'
 function playNote(frequency) {
   o = context.createOscillator();
   g = context.createGain();
-  o.type = 'sine';
+  o.type = wave_type;
   o.connect(g);
   o.frequency.value = frequency;
   g.connect(context.destination);
   o.start(0);
   g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1);
+}
+
+// set octave range code block
+let octave = 0;
+function changeOctave(value) {
+  if (value === 1  && octave < 6) {
+    octave++;
+  } else if (value === -1 && octave > -4) {
+    octave--;
+  }
+  console.log(octave)
+  // update value in html
+  if (octave === 0) {
+    document.getElementById("octave-label").innerText = '-';
+  } else {
+    document.getElementById("octave-label").innerText = octave;
+  }
 }
 
 function calculateFrequency(noteFrequency) {
@@ -60,25 +91,15 @@ function calculateFrequency(noteFrequency) {
   return Math.round(Math.pow(2, octave)*noteFrequency*1000)/1000
 }
 
-// set octave range code block
-let octave = 0;
-function changeOctave(value) {
-  if (value === 1) {
-    octave++;
-  } else {
-    octave--;
-  }
-  // update value in html
-  if (octave === 0) {
-    document.getElementById("octave-label").innerText = '-';
-  } else {
-    document.getElementById("octave-label").innerText = octave;
-  }
+function updateWave(wave) {
+  wave_type = wave
 }
 
+/************************
+ * Listener Functions
+ ************************/
 function keyPressListener(key, type) {
-  if (keys.indexOf(key) === -1) {
-    console.log("ERROR: invalid key pressed!");
+  if (key == null || keys.indexOf(key) === -1) {
   } else {
     animateKeyPress(key, type);
     playNote(calculateFrequency(noteFrequencies[key]));
@@ -86,6 +107,7 @@ function keyPressListener(key, type) {
 }
 
 function keyReleaseListener(key) {
+  if (key == null || keys.indexOf(key) === -1) return;
   let key_element = document.getElementById(key);
   if (key_element.parentElement.id === "white-keys") {
     key_element.style.backgroundColor = "white"; // white key was released so set it back to white
@@ -95,6 +117,9 @@ function keyReleaseListener(key) {
   }
 }
 
+/************************
+ * Other
+ ************************/
 function animateKeyPress(key, type) {
   let key_element = document.getElementById(key);
   key_element.style.backgroundColor = "gray";
