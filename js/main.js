@@ -1,5 +1,5 @@
-const keys = ["KeyA", "KeyS", "KeyD", "KeyF", "KeyG",
-  "KeyH", "KeyJ", "KeyK", "KeyW", "KeyE", "KeyT", "KeyY", "KeyU"];
+const keys = ["A", "S", "D", "F", "G",
+  "H", "J", "K", "W", "E", "T", "Y", "U"];
 const noteFrequencies = {  // frequencies starting with middle C
   'A': 261.626,
   'W': 277.183,
@@ -18,7 +18,11 @@ const noteFrequencies = {  // frequencies starting with middle C
 
 // listener for when a key is pressed
 document.addEventListener("keypress", function(event) {
-  keyPressListener(event);
+  keyPressListener(event.key.toUpperCase(), "keypress");
+});
+// listener for when the key is released
+document.addEventListener("keyup", function (event) {
+  keyReleaseListener(event.key.toUpperCase());
 });
 document.getElementById("octave-up").addEventListener("click", function () {
   changeOctave(1);
@@ -26,6 +30,13 @@ document.getElementById("octave-up").addEventListener("click", function () {
 document.getElementById("octave-down").addEventListener("click", function () {
   changeOctave(-1)
 });
+document.querySelectorAll("kbd").forEach(item => {
+  item.addEventListener("click", function (event) {
+    let key = event.target.id
+    keyPressListener(key, "click")
+  });
+});
+
 
 // Synthesize audio code block
 let context = new AudioContext();
@@ -65,26 +76,29 @@ function changeOctave(value) {
   }
 }
 
-function keyPressListener(event) {
-  if (keys.indexOf(event.code) === -1) {
+function keyPressListener(key, type) {
+  if (keys.indexOf(key) === -1) {
     console.log("ERROR: invalid key pressed!");
   } else {
-    animateKeyPress(event);
-    playNote(calculateFrequency(noteFrequencies[event.key.toUpperCase()]));
+    animateKeyPress(key, type);
+    playNote(calculateFrequency(noteFrequencies[key]));
   }
 }
 
-function animateKeyPress(event) {
-  let key = document.getElementById(event.key.toUpperCase());
-  key.style.backgroundColor = "gray";
+function keyReleaseListener(key) {
+  let key_element = document.getElementById(key);
+  if (key_element.parentElement.id === "white-keys") {
+    key_element.style.backgroundColor = "white"; // white key was released so set it back to white
+  }
+  else {
+    key_element.style.backgroundColor = "black";
+  }
+}
 
-  // listener for when the key is released
-  document.addEventListener("keyup", function () {
-    if (key.parentElement.classList.contains("white-keys")) {
-      key.style.backgroundColor = "white"; // white key was released so set it back to white
-    }
-    else {
-      key.style.backgroundColor = "black";
-    }
-  });
+function animateKeyPress(key, type) {
+  let key_element = document.getElementById(key);
+  key_element.style.backgroundColor = "gray";
+  if (type === "click") {
+    setTimeout(() => {keyReleaseListener(key)}, 100);
+  }
 }

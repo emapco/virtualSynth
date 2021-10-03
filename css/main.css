@@ -132,25 +132,25 @@ kbd {
   margin: 0;
 }
 
-.white-keys kbd {
+#white-keys kbd {
   border: solid gray;
   padding-top: 250px;
   background: white;
 }
 
-.black-keys kbd {
+#black-keys kbd {
   padding-top: 160px;
   color: white;
   top: 1em;
   z-index: 2;
 }
 
-.white-keys {
+#white-keys {
   flex-wrap: nowrap;
   display: flex;
 }
 
-.black-keys {
+#black-keys {
   left: 20px;
   bottom: 277px;
   flex-wrap: nowrap;
