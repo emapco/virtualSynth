@@ -159,13 +159,11 @@ span {
   display: flex;
 }
 
-#W  {
-  background: black;
-  border: solid gray;
+#W {
   left: 20px;
 }
 
-.other-black-keys {
+#W, #E, #T, #Y, #U, #O, #P {  /* Multiple id are need to play the right note*/
   background: black;
   border: solid gray;
 }
