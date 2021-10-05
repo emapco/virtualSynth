@@ -61,6 +61,8 @@ let o = null;
 let o2 = null;
 let g = null;
 let g2 = null;
+let gain1 = 50;
+let gain2 = 50;
 let osc2_on = false;
 let wave_type = 'sine'
 let wave_type2 = 'sine'
@@ -72,7 +74,8 @@ function playNote(frequency) {
   o.frequency.value = frequency;
   g.connect(context.destination);
   o.start(0);
-  g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1);
+  g.gain.value = gain1/100;
+  g.gain.exponentialRampToValueAtTime(0.00005, context.currentTime + 1);
   if (osc2_on) {
     o2 = context.createOscillator();
     g2 = context.createGain();
@@ -81,7 +84,8 @@ function playNote(frequency) {
     o2.frequency.value = frequency;
     g2.connect(context.destination);
     o2.start(0)
-    g2.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1);
+    g2.gain.value = gain2/100;
+    g2.gain.exponentialRampToValueAtTime(0.00005, context.currentTime + 1);
   }
 }
 
@@ -112,8 +116,7 @@ function calculateFrequency(noteFrequency) {
 function updateWave(wave, op) {
   if (op === 1) {
     wave_type = wave;
-  }
-  else {
+  } else {
     wave_type2 = wave;
   }
 }
@@ -121,6 +124,16 @@ function updateWave(wave, op) {
 function enableOsc2(value) {
   osc2_on = value;
 }
+
+function updateGain(value, op) {
+  console.log(value)
+  if (op === 1) {
+    gain1 = value;
+  } else {
+    gain2 = value;
+  }
+}
+
 
 /************************
  * Listener Functions

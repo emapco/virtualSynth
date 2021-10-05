@@ -27,10 +27,12 @@
     <div class="left-side">
       <div class="input-container">
         <p>Select waveform</p>
-        <span><label><input type="radio" name="soundWave" checked value="sine" onclick="updateWave(this.value, 1)">Sine</label></span>
-        <span><label><input type="radio" name="soundWave" value="square" onclick="updateWave(this.value, 1)">Square</label></span>
-        <span><label><input type="radio" name="soundWave" value="sawtooth" onclick="updateWave(this.value, 1)">Sawtooth</label></span>
-        <span><label><input type="radio" name="soundWave" value="triangle" onclick="updateWave(this.value, 1)">Triangle</label></span>
+        <span><label><input type="radio" name="soundWave" checked value="sine" onclick="updateWave(this.value, 1)"> Sine</label></span>
+        <span><label><input type="radio" name="soundWave" value="square" onclick="updateWave(this.value, 1)"> Square</label></span>
+        <span><label><input type="radio" name="soundWave" value="sawtooth" onclick="updateWave(this.value, 1)"> Sawtooth</label></span>
+        <span><label><input type="radio" name="soundWave" value="triangle" onclick="updateWave(this.value, 1)"> Triangle</label></span>
+        <p>Gain</p>
+        <span><label><input class="slider" type="range" min="1" max="100" value="50" oninput="updateGain(this.value, 1)"></label></span>
       </div>
       <div class="input-container">
         <p>Change octave</p>
@@ -67,12 +69,14 @@
     <div class="right-side">
       <div class="input-container">
         <p>Second Oscillator</p>
-        <span><label><input type="checkbox" onclick="enableOsc2(this.checked)" >On</label></span>
+        <span><label><input type="checkbox" onclick="enableOsc2(this.checked)"> On</label></span>
         <p>Select waveform</p>
-        <span><label><input type="radio" name="soundWave2" checked value="sine" onclick="updateWave(this.value, 2)">Sine</label></span>
-        <span><label><input type="radio" name="soundWave2" value="square" onclick="updateWave(this.value, 2)">Square</label></span>
-        <span><label><input type="radio" name="soundWave2" value="sawtooth" onclick="updateWave(this.value, 2)">Sawtooth</label></span>
-        <span><label><input type="radio" name="soundWave2" value="triangle" onclick="updateWave(this.value, 2)">Triangle</label></span>
+        <span><label><input type="radio" name="soundWave2" checked value="sine" onclick="updateWave(this.value, 2)"> Sine</label></span>
+        <span><label><input type="radio" name="soundWave2" value="square" onclick="updateWave(this.value, 2)"> Square</label></span>
+        <span><label><input type="radio" name="soundWave2" value="sawtooth" onclick="updateWave(this.value, 2)"> Sawtooth</label></span>
+        <span><label><input type="radio" name="soundWave2" value="triangle" onclick="updateWave(this.value, 2)"> Triangle</label></span>
+        <p>Gain</p>
+        <span><label><input class="slider" type="range" min="1" max="100" value="50" oninput="updateGain(this.value, 2)"></label></span>
       </div>
     </div>
   </div>
