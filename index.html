@@ -27,10 +27,16 @@
     <div class="left-side">
       <div class="input-container">
         <p>Select waveform</p>
-        <span><label><input type="radio" name="soundWave" checked value="sine" onclick="updateWave(this.value)">Sine</label></span>
-        <span><label><input type="radio" name="soundWave" value="square" onclick="updateWave(this.value)">Square</label></span>
-        <span><label><input type="radio" name="soundWave" value="sawtooth" onclick="updateWave(this.value)">Sawtooth</label></span>
-        <span><label><input type="radio" name="soundWave" value="triangle" onclick="updateWave(this.value)">Triangle</label></span>
+        <span><label><input type="radio" name="soundWave" checked value="sine" onclick="updateWave(this.value, 1)">Sine</label></span>
+        <span><label><input type="radio" name="soundWave" value="square" onclick="updateWave(this.value, 1)">Square</label></span>
+        <span><label><input type="radio" name="soundWave" value="sawtooth" onclick="updateWave(this.value, 1)">Sawtooth</label></span>
+        <span><label><input type="radio" name="soundWave" value="triangle" onclick="updateWave(this.value, 1)">Triangle</label></span>
+      </div>
+      <div class="input-container">
+        <p>Change octave</p>
+        <button type="button" id="octave-up">&#8593;</button>
+        <label id="octave-label">-</label>
+        <button type="button" id="octave-down">&#8595;</button>
       </div>
     </div>
     <div class="key-container">
@@ -55,10 +61,13 @@
     </div>
     <div class="right-side">
       <div class="input-container">
-        <p>Change octave</p>
-        <button type="button" id="octave-up">&#8593;</button>
-        <label id="octave-label">-</label>
-        <button type="button" id="octave-down">&#8595;</button>
+        <p>Second Oscillator</p>
+        <span><label><input type="checkbox" onclick="enableOsc2(this.checked)" >On</label></span>
+        <p>Select waveform</p>
+        <span><label><input type="radio" name="soundWave2" checked value="sine" onclick="updateWave(this.value, 2)">Sine</label></span>
+        <span><label><input type="radio" name="soundWave2" value="square" onclick="updateWave(this.value, 2)">Square</label></span>
+        <span><label><input type="radio" name="soundWave2" value="sawtooth" onclick="updateWave(this.value, 2)">Sawtooth</label></span>
+        <span><label><input type="radio" name="soundWave2" value="triangle" onclick="updateWave(this.value, 2)">Triangle</label></span>
       </div>
     </div>
   </div>

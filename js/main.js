@@ -54,8 +54,12 @@ document.querySelectorAll("kbd").forEach(item => {
 // Synthesize audio code block
 let context = new AudioContext();
 let o = null;
+let o2 = null;
 let g = null;
+let g2 = null;
+let osc2_on = false;
 let wave_type = 'sine'
+let wave_type2 = 'sine'
 function playNote(frequency) {
   o = context.createOscillator();
   g = context.createGain();
@@ -65,6 +69,16 @@ function playNote(frequency) {
   g.connect(context.destination);
   o.start(0);
   g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1);
+  if (osc2_on) {
+    o2 = context.createOscillator();
+    g2 = context.createGain();
+    o2.type = wave_type2
+    o2.connect(g2);
+    o2.frequency.value = frequency;
+    g2.connect(context.destination);
+    o2.start(0)
+    g2.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1);
+  }
 }
 
 // set octave range code block
@@ -91,8 +105,17 @@ function calculateFrequency(noteFrequency) {
   return Math.round(Math.pow(2, octave)*noteFrequency*1000)/1000
 }
 
-function updateWave(wave) {
-  wave_type = wave
+function updateWave(wave, op) {
+  if (op === 1) {
+    wave_type = wave;
+  }
+  else {
+    wave_type2 = wave;
+  }
+}
+
+function enableOsc2(value) {
+  osc2_on = value;
 }
 
 /************************
