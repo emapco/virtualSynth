@@ -1,5 +1,5 @@
 const keys = ["A", "S", "D", "F", "G",
-  "H", "J", "K", "W", "E", "T", "Y", "U"];
+  "H", "J", "K", "W", "E", "T", "Y", "U", "O", "L", "P", ";"];
 const noteFrequencies = {  // frequencies starting with middle C
   'A': 261.626,
   'W': 277.183,
@@ -13,7 +13,11 @@ const noteFrequencies = {  // frequencies starting with middle C
   'H': 440.000,
   'U': 466.164,
   'J': 493.883,
-  'K': 523.252
+  'K': 523.252,
+  'O': 554.365,
+  'L': 587.330,
+  'P': 622.254,
+  ';': 659.255
 }
 
 /************************

@@ -159,18 +159,18 @@ span {
   display: flex;
 }
 
-#W, #E {
+#W  {
   background: black;
   border: solid gray;
   left: 20px;
 }
 
-#T, #Y, #U {
+.other-black-keys {
   background: black;
   border: solid gray;
 }
 
-#blank-key {
+.blank-key {
   opacity: 0;
   font-size: 15px; /*So TYU keys are aligned properly */
 }
