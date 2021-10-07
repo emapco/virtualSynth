@@ -150,7 +150,7 @@ function createOsc(oscFrequency, wave, filterOn, filterType, filterFrequency,
   }
 
   volume.connect(context.destination);
-  osc.type = wave
+  osc.type = wave;
   osc.frequency.value = oscFrequency;
   volume.gain.value = gainVal/100;
   volume.gain.exponentialRampToValueAtTime(0.00005, context.currentTime + 1);
@@ -199,9 +199,8 @@ function keyReleaseListener(key) {
   let key_element = document.getElementById(key);
   if (key_element.parentElement.id === "white-keys") {
     key_element.style.backgroundColor = "white"; // white key was released so set it back to white
-  }
-  else {
-    key_element.style.backgroundColor = "black";
+  } else {
+    key_element.style.backgroundColor = "#121212";
   }
 }
 

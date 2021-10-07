@@ -106,6 +106,7 @@ the whole synth and other components */
   flex-direction: row;
   flex-wrap: nowrap;
   margin: auto;
+  margin-top: -10em;
 }
 
 /* Styling for the synth components on
@@ -118,7 +119,7 @@ the side of the synth keyboard */
 
 .black-container {
   border: solid gray;
-  background: black;
+  background: #121212;
   color: white;
   margin: 0 1em .5em 1em;
   padding: 0 2em 2em 1em;
@@ -230,7 +231,7 @@ Synth keyboard related CSS
 }
 
 #W, #E, #T, #Y, #U, #O, #P {  /* Multiple id are need to play the right note*/
-  background: black;
+  background: #121212;
   border: solid gray;
 }
 
