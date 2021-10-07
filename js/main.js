@@ -63,30 +63,21 @@ document.getElementById('applyFilter2').addEventListener('click',
     openFilterTab('2');
 });
 
-function openFilterTab(oscStr) {
-  let otherOscStr = (oscStr === '1') ? '2' : '1';
-  let selectedTabDiv = document.getElementById("oscFilter" + oscStr);
-  let otherTabDiv = document.getElementById("oscFilter" + otherOscStr);
-  let selectedTabButton = document.getElementById("applyFilter" + oscStr);
-  let otherTabButton = document.getElementById("applyFilter" + otherOscStr);
-  selectedTabDiv.style.display = 'flex';
-  otherTabDiv.style.display = 'none';
-  selectedTabButton.className = 'active';
-  otherTabButton.className = '';
-}
-
 /************************
 * AUDIO SECTION
  ************************/
 // Synthesize audio code block
 let context = new (window.AudioContext || window.webkitAudioContext)();
+
 function playNote(frequency) {
   // initialize variables needed to create a oscillator
   let gainVal = Number(document.getElementById('oscGain').value);
-  let filterOn = document.getElementById('filterOn1').checked
-  let filterFrequency = Number(document.getElementById('filterCutoff1').value);
+  let filterOn = document.getElementById('filterOn1').checked;
   let filterGain = Number(document.getElementById('filterGain1').value);
-  let filterQ = Number(document.getElementById('filterQ1').value);
+  let filterFrequency = scaleLog(Number(document.getElementById(
+    'filterCutoff1').value), 10, 20000);
+  let filterQ = Number(document.getElementById(
+    'filterQ1').value);
   let filterType = null;
   let filterElements = document.getElementsByName('filter1');
   filterElements.forEach( function (item) {
@@ -110,11 +101,13 @@ function playNote(frequency) {
     // initialize variables for second oscillator
     gainVal = Number(document.getElementById('osc2Gain').value);
     filterOn = document.getElementById('filterOn2').checked
-    let filterFrequency = Number(document.getElementById('filterCutoff2').value);
-    let filterGain = Number(document.getElementById('filterGain2').value);
-    let filterQ = Number(document.getElementById('filterQ2').value);
-    let filterType = null;
-    let filterElements = document.getElementsByName('filter2');
+    filterGain = Number(document.getElementById('filterGain2').value);
+    filterFrequency = scaleLog(Number(document.getElementById(
+      'filterCutoff2').value), 10, 20000);
+    filterQ = Number(document.getElementById(
+      'filterQ2').value);
+    filterType = null;
+    filterElements = document.getElementsByName('filter2');
     filterElements.forEach( function (item) {
       if(item.checked) {
         filterType = item.value;
@@ -213,4 +206,26 @@ function animateKeyPress(key, type) {
   if (type === "click") {
     setTimeout(() => {keyReleaseListener(key)}, 100);
   }
+}
+
+function scaleLog(number, min, max) {
+  let oldMin = 1;
+  let oldMax = 100;
+  let newMin = Math.log(min);
+  let newMax = Math.log(max);
+  let factor = (newMax-newMin) / (oldMax - oldMin);
+  console.log(Math.exp(newMin + factor*(number-oldMin)));
+  return Math.exp(newMin + factor*(number-oldMin));
+}
+
+function openFilterTab(oscStr) {
+  let otherOscStr = (oscStr === '1') ? '2' : '1';
+  let selectedTabDiv = document.getElementById("oscFilter" + oscStr);
+  let otherTabDiv = document.getElementById("oscFilter" + otherOscStr);
+  let selectedTabButton = document.getElementById("applyFilter" + oscStr);
+  let otherTabButton = document.getElementById("applyFilter" + otherOscStr);
+  selectedTabDiv.style.display = 'flex';
+  otherTabDiv.style.display = 'none';
+  selectedTabButton.className = 'active';
+  otherTabButton.className = '';
 }
