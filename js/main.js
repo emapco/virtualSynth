@@ -23,6 +23,9 @@ const noteFrequencies = {  // frequencies starting with middle C
 /************************
  * EventListener SECTION
  ************************/
+window.addEventListener('load', function () {
+  openFilterTab('1');
+});
 // listener for when a key is pressed
 document.addEventListener("keypress", function(event) {
   keyPressListener(event.key.toUpperCase(), "keypress");
@@ -51,50 +54,116 @@ document.querySelectorAll("kbd").forEach(item => {
     keyPressListener(key, "click")
   });
 });
+document.getElementById('applyFilter1').addEventListener('click',
+  function () {
+    openFilterTab('1');
+});
+document.getElementById('applyFilter2').addEventListener('click',
+  function () {
+    openFilterTab('2');
+});
+
+function openFilterTab(oscStr) {
+  let otherOscStr = (oscStr === '1') ? '2' : '1';
+  let selectedTabDiv = document.getElementById("oscFilter" + oscStr);
+  let otherTabDiv = document.getElementById("oscFilter" + otherOscStr);
+  let selectedTabButton = document.getElementById("applyFilter" + oscStr);
+  let otherTabButton = document.getElementById("applyFilter" + otherOscStr);
+  selectedTabDiv.style.display = 'flex';
+  otherTabDiv.style.display = 'none';
+  selectedTabButton.className = 'active';
+  otherTabButton.className = '';
+}
 
 /************************
 * AUDIO SECTION
  ************************/
 // Synthesize audio code block
-let context = new AudioContext();
-let o = null;
-let o2 = null;
-let g = null;
-let g2 = null;
-let gain1 = 50;
-let gain2 = 50;
-let osc2_on = false;
-let wave_type = 'sine'
-let wave_type2 = 'sine'
+let context = new (window.AudioContext || window.webkitAudioContext)();
 function playNote(frequency) {
-  o = context.createOscillator();
-  g = context.createGain();
-  o.type = wave_type;
-  o.connect(g);
-  o.frequency.value = frequency;
-  g.connect(context.destination);
-  o.start(0);
-  g.gain.value = gain1/100;
-  g.gain.exponentialRampToValueAtTime(0.00005, context.currentTime + 1);
-  if (osc2_on) {
-    o2 = context.createOscillator();
-    g2 = context.createGain();
-    o2.type = wave_type2
-    o2.connect(g2);
-    o2.frequency.value = frequency;
-    g2.connect(context.destination);
-    o2.start(0)
-    g2.gain.value = gain2/100;
-    g2.gain.exponentialRampToValueAtTime(0.00005, context.currentTime + 1);
+  // initialize variables needed to create a oscillator
+  let gainVal = Number(document.getElementById('oscGain').value);
+  let filterOn = document.getElementById('filterOn1').checked
+  let filterFrequency = Number(document.getElementById('filterCutoff1').value);
+  let filterGain = Number(document.getElementById('filterGain1').value);
+  let filterQ = Number(document.getElementById('filterQ1').value);
+  let filterType = null;
+  let filterElements = document.getElementsByName('filter1');
+  filterElements.forEach( function (item) {
+    if(item.checked) {
+      filterType = item.value;
+    }
+  });
+  let wave = null;
+  let waveElements = document.getElementsByName('soundWave');
+  waveElements.forEach( function (item) {
+    if(item.checked) {
+      wave = item.value;
+    }
+  });
+  // create the first oscillator
+  createOsc(frequency, wave, filterOn, filterType, filterFrequency,
+    filterGain, filterQ, gainVal)
+
+  // create the second oscillator if on
+  if (document.getElementById('osc2On').checked) {
+    // initialize variables for second oscillator
+    gainVal = Number(document.getElementById('osc2Gain').value);
+    filterOn = document.getElementById('filterOn2').checked
+    let filterFrequency = Number(document.getElementById('filterCutoff2').value);
+    let filterGain = Number(document.getElementById('filterGain2').value);
+    let filterQ = Number(document.getElementById('filterQ2').value);
+    let filterType = null;
+    let filterElements = document.getElementsByName('filter2');
+    filterElements.forEach( function (item) {
+      if(item.checked) {
+        filterType = item.value;
+      }
+    });
+    wave = null;
+    waveElements = document.getElementsByName('soundWave2');
+    waveElements.forEach( function (item) {
+      if(item.checked) {
+        wave = item.value;
+      }
+    });
+    // create the second oscillator
+    createOsc(frequency, wave, filterOn, filterType, filterFrequency,
+      filterGain, filterQ, gainVal)
   }
+}
+
+function createOsc(oscFrequency, wave, filterOn, filterType, filterFrequency,
+                   filterGain, filterQ, gainVal) {
+  let volume = context.createGain();
+  let filter = context.createBiquadFilter();
+  let osc = context.createOscillator();
+
+  if (filterOn) {
+    osc.connect(filter);
+    filter.connect(volume);
+    filter.type = filterType;
+    filter.frequency.value = filterFrequency;
+  } else {
+    osc.connect(volume); // can't connect osc to gain if using filter.
+    // set components' values
+  }
+
+  volume.connect(context.destination);
+  osc.type = wave
+  osc.frequency.value = oscFrequency;
+  volume.gain.value = gainVal/100;
+  volume.gain.exponentialRampToValueAtTime(0.00005, context.currentTime + 1);
+
+  osc.start(0);
 }
 
 // set octave range code block
 let octave = 0;
 function changeOctave(value) {
-  if (value === 1  && octave < 6) {
+  if (value === 1  && octave < 4) {
     octave++;
-  } else if (value === -1 && octave > -4) {
+  } else if (value === -1 && octave > -3) {
     octave--;
   }
   console.log(octave)
@@ -111,27 +180,6 @@ function calculateFrequency(noteFrequency) {
     return noteFrequency;
   }
   return Math.round(Math.pow(2, octave)*noteFrequency*1000)/1000
-}
-
-function updateWave(wave, op) {
-  if (op === 1) {
-    wave_type = wave;
-  } else {
-    wave_type2 = wave;
-  }
-}
-
-function enableOsc2(value) {
-  osc2_on = value;
-}
-
-function updateGain(value, op) {
-  console.log(value)
-  if (op === 1) {
-    gain1 = value;
-  } else {
-    gain2 = value;
-  }
 }
 
 

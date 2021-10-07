@@ -92,35 +92,6 @@ body {
   display: flex;
 }
 
-.synth-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  margin: auto;
-  width: auto;
-}
-
-.left-side, .right-side {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-}
-
-.input-container {
-  border: solid gray;
-  background: black;
-  color: white;
-  margin: 0 1em 0 1em;
-  padding: 0 2em 2em 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.key-container {
-  margin-top: 10rem;
-}
-
 kbd {
   text-align: center;
   padding-left: 15px;
@@ -128,9 +99,104 @@ kbd {
   margin: 0;
 }
 
-span {
-   display: inline-block;
-   width: 5em;
+/* Styling for the container that contains
+the whole synth and other components */
+.synth-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: auto;
+}
+
+/* Styling for the synth components on
+the side of the synth keyboard */
+.left-side, .right-side {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.black-container {
+  border: solid gray;
+  background: black;
+  color: white;
+  margin: 0 1em .5em 1em;
+  padding: 0 2em 2em 1em;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-header {
+  border-bottom: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2em 1em 0 1em;
+  padding: 0;
+}
+
+.filter-container {
+  display: none;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.filter-component {
+  display: flex;
+  flex-direction: column;
+  padding: 1em .5em 0 .5em;
+}
+
+.start {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style the filter tab */
+.filter-tab {
+  display: flex;
+  align-items:  flex-start;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+/* Style the buttons that are used to open the tab content */
+.filter-tab button {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.filter-tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.filter-tab button.active {
+  background-color: #ccc;
+}
+
+/****************
+Synth keyboard related CSS
+*****************/
+.key-container {
+  margin-top: 10rem;
 }
 
 #white-keys kbd {
@@ -153,7 +219,7 @@ span {
 
 #black-keys {
   left: 20px;
-  bottom: 277px;
+  top: 189px;
   flex-wrap: nowrap;
   position: relative;
   display: flex;
@@ -173,12 +239,24 @@ span {
   font-size: 15px; /*So TYU keys are aligned properly */
 }
 
+/**************************
+Input related widgets CSS
+***************************/
+input[type=range][orient=vertical] /* firefox */
+{
+  writing-mode: bt-lr; /* IE */
+  -webkit-appearance: slider-vertical; /* WebKit (chrome) */
+  width: 1em;
+  height: 175px;
+  padding: 0 5px;
+}
+
 .slider {
   -webkit-appearance: none;
   width: 6em;
   height: 1em;
   border-radius: 5px;
-  background: #d3d3d3;
+  background: white;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
@@ -193,11 +271,9 @@ span {
 /* ==========================================================================
    Helper classes
    ========================================================================== */
-
 /*
  * Hide visually and from screen readers
  */
-
 .hidden,
 [hidden] {
   display: none !important;
