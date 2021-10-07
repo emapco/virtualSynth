@@ -1,5 +1,5 @@
 # virtualSynth
-A simple keyboard synth that you can play with your keybaord or mouse.
+A synthesizer that you can play with your keyboard or mouse.
 You can change the octave by using the up and down arrows.
 
 [Link to the web app.](https://emapco.github.io/virtualSynth/)
