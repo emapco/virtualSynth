@@ -10,7 +10,6 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
 html {
   color: #222;
   font-size: 1em;
@@ -88,46 +87,70 @@ textarea {
    ========================================================================== */
 body {
   background: url("https://raw.githubusercontent.com/emapco/virtualSynth/master/img/wood.png") center;
-  height: 100vh;
   display: flex;
+  flex-flow: row nowrap;
+  margin: auto;
 }
 
 kbd {
+  border-radius: .7em;
   text-align: center;
   padding-left: 15px;
   padding-right: 15px;
   margin: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Styling for the container that contains
 the whole synth and other components */
-.synth-container {
+#synth-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  flex-flow: row nowrap;
   margin: auto;
-  margin-top: -10em;
+  margin-top: -8em;
 }
 
 /* Styling for the synth components on
 the side of the synth keyboard */
-.left-side, .right-side {
+.side-container {
   display: flex;
   flex-direction: column;
   margin: auto;
 }
 
 .black-container {
-  border: solid gray;
-  background: #121212;
-  color: white;
+  border-radius: 1.15em;
+  background: #212529;
+  color: #f8f9fa;
   margin: 0 1em .5em 1em;
-  padding: 0 2em 2em 1em;
 }
 
 .input-container {
   display: flex;
   flex-direction: column;
+  padding: 1em;
+}
+
+.input-container-horizontal {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+/***********************
+* Synth components
+***********************/
+.octaveDisplay {
+  text-align: center;
+  flex-grow: 2;
+}
+
+.octave-button {
+  flex-grow: 1;
 }
 
 .container-header {
@@ -136,20 +159,90 @@ the side of the synth keyboard */
   flex-direction: column;
   align-items: center;
   margin: 2em 1em 0 1em;
-  padding: 0;
+  padding: 1em 1em 0;
 }
 
-.filter-container {
+.center-container {
   display: none;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
+  text-align: center;
+}
+
+.center-container-tab {
+  #width: 100%;
 }
 
 .filter-component {
   display: flex;
   flex-direction: column;
   padding: 1em .5em 0 .5em;
+}
+
+/* Style the tabs */
+.main-tab {
+  width: 100%;
+}
+
+.main-tab button {
+  background: transparent;
+  overflow: hidden;
+}
+
+.sub-tab-container {
+  display: flex;
+}
+
+.sub-tab-container button {
+  border-radius: .6em;
+  overflow: hidden;
+}
+/*************************
+Synth keyboard related CSS
+*************************/
+#white-keys-container kbd {
+  background: #f8f9fa;
+  color: #212529;
+  border: solid #8f5e31;
+  padding-top: 250px;
+  border: 1em solid rgb(33, 37, 41);
+  border: solid rgba(33, 37, 41, 0);
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+}
+
+#black-keys-container kbd {
+  background: #212529;
+  color: #f8f9fa;
+  padding-top: 160px;
+  z-index: 2;
+  border: 1em solid rgb(33, 37, 41);
+  border: solid rgba(33, 37, 41, 0);
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+}
+
+#white-keys-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#black-keys-container {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  left: 20px;
+  top: 189px;
+}
+
+#W { /* Offsets all of the black keys */
+  left: 20px;
+}
+
+.blank-key {
+  opacity: 0;
+  font-size: .45em; /*So TYU keys are aligned properly */
 }
 
 .start {
@@ -159,85 +252,22 @@ the side of the synth keyboard */
 }
 
 .center {
-  display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Style the filter tab */
-.filter-tab {
-  display: flex;
-  align-items:  flex-start;
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: white;
+.transparent-border {
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 }
 
-/* Style the buttons that are used to open the tab content */
-.filter-tab button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
-
-/* Change background color of buttons on hover */
-.filter-tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.filter-tab button.active {
-  background-color: #ccc;
-}
-
-/****************
-Synth keyboard related CSS
-*****************/
-.key-container {
-  margin-top: 10rem;
-}
-
-#white-keys kbd {
-  border: solid gray;
-  padding-top: 250px;
-  background: white;
-}
-
-#black-keys kbd {
-  padding-top: 160px;
-  color: white;
-  top: 1em;
-  z-index: 2;
-}
-
-#white-keys {
-  flex-wrap: nowrap;
-  display: flex;
-}
-
-#black-keys {
-  left: 20px;
-  top: 189px;
-  flex-wrap: nowrap;
-  position: relative;
-  display: flex;
-}
-
-#W {
-  left: 20px;
-}
-
-#W, #E, #T, #Y, #U, #O, #P {  /* Multiple id are need to play the right note*/
-  background: #121212;
-  border: solid gray;
-}
-
-.blank-key {
-  opacity: 0;
-  font-size: 15px; /*So TYU keys are aligned properly */
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /**************************
@@ -250,23 +280,6 @@ input[type=range][orient=vertical] /* firefox */
   width: 1em;
   height: 175px;
   padding: 0 5px;
-}
-
-.slider {
-  -webkit-appearance: none;
-  width: 6em;
-  height: 1em;
-  border-radius: 5px;
-  background: white;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
 }
 
 /* ==========================================================================

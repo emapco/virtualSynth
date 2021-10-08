@@ -16,34 +16,44 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
   <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/main.css">
-
   <meta name="theme-color" content="#fafafa">
 </head>
 <body>
-  <!-- Add your site or application content here -->
-  <div class="synth-container">
+  <div id="synth-container"> <!-- c -->
     <!-- Components that go on the left side of synth keys go in this div-->
-    <div class="left-side">
-      <div class="input-container black-container"> <!-- first oscillator settings -->
-        <p>Select waveform</p>
-        <label><input type="radio" name="soundWave" checked value="sine"> Sine</label>
-        <label><input type="radio" name="soundWave" value="square"> Square</label>
-        <label><input type="radio" name="soundWave" value="sawtooth"> Sawtooth</label>
-        <label><input type="radio" name="soundWave" value="triangle"> Triangle</label>
-        <p class="center">Gain</p>
-        <label class="center"><input class="slider" id='oscGain' type="range"
-                                     min="0" max="100" value="50"></label>
-      </div>
-      <div class="input-container black-container center"> <!-- change synth octave -->
-        <p>Change octave</p>
-        <button type="button" id="octave-up">&#8593;</button>
-        <label id="octave-label">-</label>
-        <button type="button" id="octave-down">&#8595;</button>
+    <div class="side-container">
+      <!-- first oscillator settings -->
+      <div class="input-container black-container">
+        <!-- enable oscillator-->
+        <div class="form-check form-switch">
+          <input type="checkbox" checked class="form-check-input mb-3" id="oscOn1">
+          <label class="form-check-label" for="oscOn1">Oscillator</label>
+        </div>
+        <!-- select wave -->
+        <label for="oscWave1" class="mb-1">Wave</label>
+        <select class="form-select form-select-sm mb-3" id="oscWave1">
+          <option selected value="sine">Sine</option>
+          <option value="square">Square</option>
+          <option value="sawtooth">Sawtooth</option>
+          <option value="triangle">Triangle</option>
+        </select>
+        <!-- changes gain -->
+        <label for="oscGain1" class="form-label mb-0">Gain</label>
+        <input type="range" class="form-range mb-2" id="oscGain1">
+        <label class="form-label mb-1">Octave</label>
+        <!-- change octave -->
+        <div class="input-container-horizontal center">
+          <button type="button" id="octave-down1" class="btn btn-light octave-button">&#8595;</button>
+          <label id="octave-label1" class="octaveDisplay">-</label>
+          <button type="button" id="octave-up1" class="btn btn-light octave-button">&#8593;</button>
+        </div>
       </div>
     </div> <!-- end of left-side container -->
-    <div class="key-container"> <!-- container for synth keys and other components-->
-      <div id="black-keys">
+    <!-- container for synth keys and other components-->
+    <div class="key-container">
+      <div id="black-keys-container">
         <kbd id="W">W</kbd>
         <kbd id="E">E</kbd>
         <kbd class="blank-key">;'</kbd>
@@ -54,7 +64,7 @@
         <kbd id="O">O</kbd>
         <kbd id="P">P</kbd>
       </div>
-      <div id="white-keys">
+      <div id="white-keys-container">
         <kbd id="A">A</kbd>
         <kbd id="S">S</kbd>
         <kbd id="D">D</kbd>
@@ -67,94 +77,120 @@
         <kbd id=";">;</kbd>
       </div>
       <!-- Components that go below the synth keyboard -->
-      <div class="container-header black-container"> <!-- Filter component header div -->
-        <p>Filter Settings</p>
-        <div class="filter-tab">
-          <button type="button" id="applyFilter1" class="active"> Osc 1</button>
-          <button type="button" id="applyFilter2"> Osc 2</button>
+      <!-- Filter component header div -->
+      <div class="container-header black-container">
+        <div class="center-container-tab">
+          <button type="button" id="main-filter-tab" class="active main-tab btn btn-dark">Filter</button>
+          <div class="sub-tab-container">
+            <button type="button" id="applyFilterButton1" class="btn btn-light">Osc 1</button>
+            <button type="button" id="applyFilterButton2" class="btn btn-light">Osc 2</button>
+          </div>
         </div>
       </div>
       <!-- first oscillator's filter settings -->
-      <div id="oscFilter1" class="filter-container black-container">
-        <!-- TODO Scale the cutoff frequency and q factor sliders -->
-        <div class="filter-component center">
-          <p>Filter</p>
-          <label><input type="checkbox" id='filterOn1'> On</label>
-        </div>
+      <div id="oscFilterTab1" class="center-container black-container">
         <div class="filter-component">
-          <p class="center">Type</p>
-          <label><input type="radio" name="filter1" value="lowpass"> Lowpass</label>
-          <label><input type="radio" name="filter1" value="highpass"> Highpass</label>
-          <label><input type="radio" name="filter1" value="bandpass"> Bandpass</label>
-          <label><input type="radio" name="filter1" value="lowshelf"> Lowshelf</label>
-          <label><input type="radio" name="filter1" value="highshelf"> Highshelf</label>
-          <label><input type="radio" name="filter1" value="peaking"> Peaking</label>
-          <label><input type="radio" name="filter1" value="notch"> Notch</label>
+          <!-- enable filter -->
+          <div class="form-check form-switch">
+            <input type="checkbox" class="form-check-input mb-3" id="filterOn1">
+            <label class="form-check-label" for="filterOn1">Enable</label>
+          </div>
+          <!-- select filter type -->
+          <label for="filter1" class="mb-1">Type</label>
+          <select class="form-select form-select-sm mb-3" id="filter1">
+            <option selected value="lowpass">Lowpass</option>
+            <option value="highpass">Highpass</option>
+            <option value="bandpass">Bandpass</option>
+            <option value="lowshelf">Lowshelf</option>
+            <option value="highshelf">Highshelf</option>
+            <option value="peaking">Peaking</option>
+            <option value="notch">Notch</option>
+          </select>
         </div>
+        <!-- change filter gain -->
         <div class="filter-component center">
-          <p>Gain</p>
-          <label><input class="slider" id='filterGain1' type="range" orient="vertical"
-                        min="-40" max="40" value="0"></label>
+          <label for="filterGain1"  class="form-label">Gain</label>
+          <input class="mb-3" id="filterGain1" type="range" orient="vertical" min="-40" max="40" value="0">
         </div>
+        <!-- change cutoff frequency -->
         <div class="filter-component center">
-          <p>Cutoff Freq.</p>
-          <label><input class="slider" id='filterCutoff1' type="range" orient="vertical"
-                        min="1" max="100" value="49.5"></label>
+          <label for="filterCutoff1"  class="form-label">Cutoff Freq.</label>
+          <input class="" id='filterCutoff1' type="range" orient="vertical" min="1" max="100" value="49.5">
         </div>
+        <!-- change q factor -->
         <div class="filter-component center">
-          <p>Q factor</p>
-          <label><input class="slider" id='filterQ1' type="range" orient="vertical"
-                        min="0.0001" max="1000" value="500"></label>
+          <label for="filterQ1"  class="form-label">Q</label>
+          <input class="" id='filterQ1' type="range" orient="vertical" min="0.0001" max="1000" value="500">
         </div>
-      </div> <!-- end of second oscillator filter container -->
+      </div> <!-- end of first oscillator filter container -->
       <!-- 2nd oscillator's filter settings -->
-      <div id="oscFilter2" class="filter-container black-container tabcontent">
-        <div class="filter-component center">
-          <p>Filter</p>
-          <label><input type="checkbox" id='filterOn2'> On</label>
-        </div>
+      <div id="oscFilterTab2" class="center-container black-container">
         <div class="filter-component">
-          <p class="center">Type</p>
-          <label><input type="radio" name="filter2" value="lowpass"> Lowpass</label>
-          <label><input type="radio" name="filter2" value="highpass"> Highpass</label>
-          <label><input type="radio" name="filter2" value="bandpass"> Bandpass</label>
-          <label><input type="radio" name="filter2" value="lowshelf"> Lowshelf</label>
-          <label><input type="radio" name="filter2" value="highshelf"> Highshelf</label>
-          <label><input type="radio" name="filter2" value="peaking"> Peaking</label>
-          <label><input type="radio" name="filter2" value="notch"> Notch</label>
+          <!-- enable filter -->
+          <div class="form-check form-switch">
+            <input type="checkbox" class="form-check-input mb-3" id="filterOn2">
+            <label class="form-check-label" for="filterOn2">Enable</label>
+          </div>
+          <!-- select filter type -->
+          <label for="filter2" class="mb-1">Type</label>
+          <select class="form-select form-select-sm mb-3" id="filter2">
+            <option selected value="lowpass">Lowpass</option>
+            <option value="highpass">Highpass</option>
+            <option value="bandpass">Bandpass</option>
+            <option value="lowshelf">Lowshelf</option>
+            <option value="highshelf">Highshelf</option>
+            <option value="peaking">Peaking</option>
+            <option value="notch">Notch</option>
+          </select>
         </div>
+        <!-- change filter gain -->
         <div class="filter-component center">
-          <p>Gain</p>
-          <label><input class="slider" id='filterGain2' type="range" orient="vertical"
-                        min="-40" max="40" value="0"></label>
+          <label for="filterGain2"  class="form-label">Gain</label>
+          <input class="mb-3" id="filterGain2" type="range" orient="vertical" min="-40" max="40" value="0">
         </div>
+        <!-- change cutoff frequency -->
         <div class="filter-component center">
-          <p>Cutoff Freq.</p>
-          <label><input class="slider" id='filterCutoff2' type="range" orient="vertical"
-                        min="1" max="100" value="49.5"></label>
+          <label for="filterCutoff2"  class="form-label">Cutoff Freq.</label>
+          <input class="" id='filterCutoff2' type="range" orient="vertical" min="1" max="100" value="49.5">
         </div>
+        <!-- change q factor -->
         <div class="filter-component center">
-          <p>Q factor</p>
-          <label><input class="slider" id='filterQ2' type="range" orient="vertical"
-                        min="0.0001" max="1000" value="500"></label>
+          <label for="filterQ2"  class="form-label">Q</label>
+          <input class="" id='filterQ2' type="range" orient="vertical" min="0.0001" max="1000" value="500">
         </div>
       </div> <!-- end of second oscillator filter container -->
     </div> <!-- end of key-container-->
-    <div class="right-side"> <!-- Components that go on the right side of synth keys go in this div -->
+    <!-- Components that go on the right side of synth keys go in this div-->
+    <div class="side-container">
+      <!-- second oscillator settings -->
       <div class="input-container black-container">
-        <p>Second Oscillator</p> <!-- second oscillator settings -->
-        <label><input type="checkbox" id='osc2On'> On</label>
-        <p>Select waveform</p>
-        <label><input type="radio" name="soundWave2" checked value="sine"> Sine</label>
-        <label><input type="radio" name="soundWave2" value="square"> Square</label>
-        <label><input type="radio" name="soundWave2" value="sawtooth"> Sawtooth</label>
-        <label><input type="radio" name="soundWave2" value="triangle"> Triangle</label>
-        <p class="center">Gain</p>
-        <label class="center"><input class="slider" id='osc2Gain' type="range"
-                                     min="0" max="100" value="50"></label>
+        <!-- enable oscillator-->
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input mb-3" id="oscOn2">
+          <label class="form-check-label" for="oscOn2">Oscillator</label>
+        </div>
+        <!-- select wave -->
+        <label for="oscWave2" class="mb-1">Wave</label>
+        <select class="form-select form-select-sm mb-3" id="oscWave2">
+          <option selected value="sine">Sine</option>
+          <option value="square">Square</option>
+          <option value="sawtooth">Sawtooth</option>
+          <option value="triangle">Triangle</option>
+        </select>
+        <!-- changes gain -->
+        <label for="oscGain2" class="form-label mb-0">Gain</label>
+        <input type="range" class="form-range mb-2" id="oscGain2">
+        <label class="form-label mb-1">Octave</label>
+        <!-- change octave -->
+        <div class="input-container-horizontal center">
+          <button type="button" id="octave-down2" class="btn btn-light octave-button">&#8595;</button>
+          <label id="octave-label2" class="octaveDisplay">-</label>
+          <button type="button" id="octave-up2" class="btn btn-light octave-button">&#8593;</button>
+        </div>
       </div>
-    </div> <!-- end of right-side container-->
-  </div> <!-- end of synth container -->
+    </div> <!-- end of right-side container -->
+  </div><!-- end of synth container -->
+  <script src="js/jquery.js"></script>
   <script src="js/main.js"></script>
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID.
   <script>
